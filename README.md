@@ -17,3 +17,20 @@ SMTP_PORT=# SMTP Port
 SEND_TO=# Email ID of user who needs to receive error emails (if any)
 
 ```
+
+ - Set up locale for Indian Currency
+
+ ```bash
+
+sudo apt install python3-pip
+sudo apt install locales
+sudo locale-gen en_IN.UTF-8
+
+ ```
+
+ ```bash
+
+pip3 install pretty_html_table
+pip3 install pandas
+
+ ```
