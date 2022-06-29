@@ -297,7 +297,7 @@ def get_weekly_donation():
     print(end_gift_date)
     
     global url, params
-    url = "https://api.sky.blackbaud.com/gift/v1/gifts?gift_type=Donation&start_gift_date=%s&end_gift_date=%s&gift_type=MatchingGiftPayment&gift_type=PledgePayment&gift_type=RecurringGiftPayment" % (start_gift_date, end_gift_date)
+    url = "https://api.sky.blackbaud.com/gift/v1/gifts?gift_type=Donation&start_gift_date=%s&end_gift_date=%s&gift_type=MatchingGiftPayment&gift_type=PledgePayment&gift_type=RecurringGiftPayment&sort=date" % (start_gift_date, end_gift_date)
     
     pagination_api_request()
     
