@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import requests, os, json, glob, csv, sys, smtplib, ssl, imaplib, time, email, re, fuzzywuzzy, itertools, datetime, logging, locale, pretty_html_table
+import requests, os, json, glob, csv, sys, smtplib, ssl, imaplib, time, email, re, fuzzywuzzy, itertools, datetime, logging, locale, pretty_html_table, calendar
 import pandas as pd
 from smtplib import SMTP
 from datetime import datetime
@@ -665,6 +665,17 @@ def get_monthly_donation():
         
         monthly_donation_amount_list.append(donation_amount)
     
+        # Get month name
+        print("Getting month name")
+        month = calendar.month_name[monthinteger]
+        monthly_donation_month_list.append(month)
+        
+        # Incrementing the month
+        monthinteger += 1
+        
+        if monthinteger > 12:
+            monthinteger_new = monthinteger - 1
+            monthinteger = monthinteger_new
     print(monthly_donation_amount_list)
             
     
