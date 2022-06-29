@@ -239,12 +239,14 @@ def get_ytd_donation():
     current_month = datetime.now().strftime("%m")
     print("Current month: " + str(current_month))
     
+    global current_year
     current_year = datetime.now().strftime("%Y")
     print("Current year: " + str(current_year))
     
     # Determining the current Financial Year to determine Start date
     print("Determining the current Financial Year to determine Start date")
     
+    global financial_year
     if int(current_month) <= 4:
         financial_year = int(datetime.now().strftime("%Y")) - 1
     else:
@@ -340,7 +342,7 @@ def get_weekly_donation():
         get_request_re()
         
         if re_api_response['type'] == "Individual":
-            name = re_api_response['first'] + re_api_response['last']
+            name = re_api_response['first'] + " " + re_api_response['last']
             weekly_donation_donor_name_list_individual.append(name)
             weekly_donation_donor_name_list_organisation.append(" ")
         else:
@@ -374,7 +376,7 @@ def get_weekly_donation():
     
     print_json(re_donation)
     
-def get_donation_data():
+def prepare_weekly_report_table():
     """
     DONATION data
     :return:
@@ -510,7 +512,9 @@ div[style*="margin: 16px 0;"] { margin: 0 !important; }
 </body>
 </html>"""
             
-    emailbody = start + output + end
+    emailbody = start + weekly_report_output + end
+    
+    print(weekly_report_output)
     
     # Add HTML parts to MIMEMultipart message
     # The email client will try to render the last part first
@@ -531,13 +535,140 @@ div[style*="margin: 16px 0;"] { margin: 0 !important; }
         imap.append('Sent', '\\Seen', imaplib.Time2Internaldate(time.time()), emailcontent.encode('utf8'))
         imap.logout()
 
-def send_report():
-    donation_data = get_donation_data()
+def prepare_report():
+    weekly_report = prepare_weekly_report_table()
     
-    global output
-    output = build_table(donation_data, 'blue_light')
+    global weekly_report_output
+    weekly_report_output = (build_table(weekly_report, 'blue_dark', font_family='Open Sans, Helvetica, Arial, sans-serif', even_color='black', padding='10px')).replace("background-color: #D9E1F2;font-family: Open Sans", "background-color: #D9E1F2; color: black;font-family: Open Sans")
     send_email()
 
+def get_monthly_donation():
+    print("Getting Monthly Gift list from Raisers Edge")
+    
+    # April
+    apr_start_date = "04-01-" + str(financial_year)
+    apr_end_date = "04-30-" + str(financial_year)
+    
+    # May
+    may_start_date = "05-01-" + str(financial_year)
+    may_end_date = "05-31-" + str(financial_year)
+    
+    # June
+    jun_start_date = "06-01-" + str(financial_year)
+    jun_end_date = "06-30-" + str(financial_year)
+    
+    # July
+    jul_start_date = "07-01-" + str(financial_year)
+    jul_end_date = "07-31-" + str(financial_year)
+    
+    # August
+    aug_start_date = "08-01-" + str(financial_year)
+    aug_end_date = "08-31-" + str(financial_year)
+    
+    # September
+    sep_start_date = "09-01-" + str(financial_year)
+    sep_end_date = "09-30-" + str(financial_year)
+    
+    # October
+    oct_start_date = "10-01-" + str(financial_year)
+    oct_end_date = "10-31-" + str(financial_year)
+    
+    # November
+    nov_start_date = "11-01-" + str(financial_year)
+    nov_end_date = "11-30-" + str(financial_year)
+    
+    # December
+    dec_start_date = "12-01-" + str(financial_year)
+    dec_end_date = "12-31-" + str(financial_year)
+    
+    next_year = int(financial_year) + 1
+    
+    # January
+    jan_start_date = "01-01-" + str(next_year)
+    jan_end_date = "01-31-" + str(next_year)
+    
+    # February
+    feb_start_date = "02-01-" + str(next_year)
+    
+    if ((next_year % 400 == 0) or (next_year % 100 != 0) and (next_year % 4 == 0)):
+        # next year is a leap year
+        feb_end_date = "02-29-" + str(next_year)
+    else:
+        # next year is not a leap year
+        feb_end_date = "02-28-" + str(next_year)
+    
+    # March
+    mar_start_date = "03-01-" + str(next_year)
+    mar_end_date = "03-31-" + str(next_year)
+    
+    start_dates = [apr_start_date, may_start_date, jun_start_date, jul_start_date, aug_start_date, sep_start_date, oct_start_date, nov_start_date, dec_start_date, jan_start_date, feb_start_date, mar_start_date]
+    end_dates = [apr_end_date, may_end_date, jun_end_date, jul_end_date, aug_end_date, sep_end_date, oct_end_date, nov_end_date, dec_end_date, jan_end_date, feb_end_date, mar_end_date]
+    
+    print(start_dates)
+    print(end_dates)
+    
+    monthly_donation_amount_list = []
+    donation_amount = 0
+    # for start_gift_date, end_gift_date in itertools.product(start_dates, end_dates):
+        
+    #     start_ = datetime.strptime(start_gift_date, '%m-%d-%Y')
+    #     start_date = datetime.date(start_)
+    #     print(start_date)
+    #     print(date.today())
+        
+    #     if start_date > date.today():
+    #         break
+    #     else:
+    #         global url, params
+    #         url = "https://api.sky.blackbaud.com/gift/v1/gifts?gift_type=Donation&start_gift_date=%s&end_gift_date=%s&gift_type=MatchingGiftPayment&gift_type=PledgePayment&gift_type=RecurringGiftPayment" % (start_gift_date, end_gift_date)
+    #         print(url)
+    #         params = {}
+    #         pagination_api_request()
+            
+    #         donation = []
+    #         for each_file in fileList:
+    #             with open(each_file) as json_file:
+    #                 data = json.load(json_file)
+    #                 for each_value in data['value']:
+    #                     amount = each_value['amount']['value']
+    #                     donation.append(int(amount))
+            
+    #         donation_amount = sum(donation)
+    
+    for each_start_date in start_dates:
+        start_date = datetime.date(datetime.strptime(each_start_date, '%m-%d-%Y'))
+        print(start_date)
+        print(date.today())
+        
+        if start_date > date.today():
+            break
+        else:
+            for each_end_date in end_dates:
+                global url, params
+                url = "https://api.sky.blackbaud.com/gift/v1/gifts?gift_type=Donation&start_gift_date=%s&end_gift_date=%s&gift_type=MatchingGiftPayment&gift_type=PledgePayment&gift_type=RecurringGiftPayment" % (each_start_date, each_end_date)
+                print(url)
+                params = {}
+                pagination_api_request()
+                
+                donation = []
+                for each_file in fileList:
+                    with open(each_file) as json_file:
+                        data = json.load(json_file)
+                        for each_value in data['value']:
+                            amount = each_value['amount']['value']
+                            donation.append(int(amount))
+                            
+                end_dates.remove(each_end_date)
+                break
+            
+            donation_amount = sum(donation)
+        
+        monthly_donation_amount_list.append(donation_amount)
+    
+    print(monthly_donation_amount_list)
+            
+    
+    
 try:
     housekeeping()
     
@@ -547,7 +678,9 @@ try:
     get_weekly_donation()
     housekeeping()
     
-    send_report()
+    get_monthly_donation()
+    
+    prepare_report()
     
     # Close writing to Process.log
     sys.stdout.close()
