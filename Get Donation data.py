@@ -376,14 +376,11 @@ def get_weekly_donation():
     
     print_json(re_donation)
     
-def prepare_weekly_report_table():
-    """
-    DONATION data
-    :return:
-    """
-    data = pd.DataFrame(re_donation)
-    return data
-
+    prepare_report()
+    
+    global weekly_report_output
+    weekly_report_output = report_output
+    
 def send_email():
     print("Sending email...")
     
@@ -512,8 +509,9 @@ div[style*="margin: 16px 0;"] { margin: 0 !important; }
 </body>
 </html>"""
             
-    emailbody = start + weekly_report_output + end
+    emailbody = start + monthly_report_output + weekly_report_output + end
     
+    print(monthly_report_output)
     print(weekly_report_output)
     
     # Add HTML parts to MIMEMultipart message
@@ -536,11 +534,14 @@ div[style*="margin: 16px 0;"] { margin: 0 !important; }
         imap.logout()
 
 def prepare_report():
-    weekly_report = prepare_weekly_report_table()
+    """
+    DONATION data
+    :return:
+    """
+    data = pd.DataFrame(re_donation)
     
-    global weekly_report_output
-    weekly_report_output = (build_table(weekly_report, 'blue_dark', font_family='Open Sans, Helvetica, Arial, sans-serif', even_color='black', padding='10px')).replace("background-color: #D9E1F2;font-family: Open Sans", "background-color: #D9E1F2; color: black;font-family: Open Sans")
-    send_email()
+    global report_output
+    report_output = (build_table(data, 'blue_dark', font_family='Open Sans, Helvetica, Arial, sans-serif', even_color='black', padding='10px', width='1200px')).replace("background-color: #D9E1F2;font-family: Open Sans", "background-color: #D9E1F2; color: black;font-family: Open Sans")
 
 def get_monthly_donation():
     print("Getting Monthly Gift list from Raisers Edge")
@@ -608,35 +609,13 @@ def get_monthly_donation():
     print(end_dates)
     
     monthly_donation_amount_list = []
+    monthly_donation_month_list = []
     donation_amount = 0
-    # for start_gift_date, end_gift_date in itertools.product(start_dates, end_dates):
-        
-    #     start_ = datetime.strptime(start_gift_date, '%m-%d-%Y')
-    #     start_date = datetime.date(start_)
-    #     print(start_date)
-    #     print(date.today())
-        
-    #     if start_date > date.today():
-    #         break
-    #     else:
-    #         global url, params
-    #         url = "https://api.sky.blackbaud.com/gift/v1/gifts?gift_type=Donation&start_gift_date=%s&end_gift_date=%s&gift_type=MatchingGiftPayment&gift_type=PledgePayment&gift_type=RecurringGiftPayment" % (start_gift_date, end_gift_date)
-    #         print(url)
-    #         params = {}
-    #         pagination_api_request()
-            
-    #         donation = []
-    #         for each_file in fileList:
-    #             with open(each_file) as json_file:
-    #                 data = json.load(json_file)
-    #                 for each_value in data['value']:
-    #                     amount = each_value['amount']['value']
-    #                     donation.append(int(amount))
-            
-    #         donation_amount = sum(donation)
+    monthinteger = 3
     
     for each_start_date in start_dates:
-        start_date = datetime.date(datetime.strptime(each_start_date, '%m-%d-%Y'))
+        start_ = datetime.strptime(each_start_date, '%m-%d-%Y')
+        start_date = datetime.date(start_)
         print(start_date)
         print(date.today())
         
@@ -664,7 +643,7 @@ def get_monthly_donation():
             donation_amount = sum(donation)
         
         monthly_donation_amount_list.append(donation_amount)
-    
+        
         # Get month name
         print("Getting month name")
         month = calendar.month_name[monthinteger]
@@ -676,10 +655,21 @@ def get_monthly_donation():
         if monthinteger > 12:
             monthinteger_new = monthinteger - 1
             monthinteger = monthinteger_new
+    
     print(monthly_donation_amount_list)
+    print(monthly_donation_month_list)
+    
+    global re_donation
+    re_donation = {
+        'Month': monthly_donation_month_list,
+        'Donation Amount': monthly_donation_amount_list
+    }
+    
+    prepare_report()
+    
+    global monthly_report_output
+    monthly_report_output = report_output
             
-    
-    
 try:
     housekeeping()
     
@@ -690,8 +680,9 @@ try:
     housekeeping()
     
     get_monthly_donation()
+    housekeeping()
     
-    prepare_report()
+    send_email()
     
     # Close writing to Process.log
     sys.stdout.close()
