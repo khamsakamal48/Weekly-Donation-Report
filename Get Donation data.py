@@ -300,6 +300,7 @@ def get_ytd_donation():
 def get_weekly_donation():
     print("Getting Weekly Gift list from Raisers Edge")
     
+    global start_gift_date, end_gift_date
     end_gift_date = date.today().strftime("%m-%d-%Y")
     
     today = date.today()
@@ -394,6 +395,10 @@ def get_weekly_donation():
     
     global weekly_report_output
     weekly_report_output = report_output
+    
+    end_gift_date = date.today().strftime("%d %b, %Y")
+    today = date.today()
+    start_gift_date = (today - timedelta(days=7)).strftime("%d %b, %Y")
     
 def send_email():
     print("Sending email...")
