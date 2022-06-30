@@ -38,8 +38,6 @@ os.chdir(os.getcwd())
 # Setting Locale
 print("Setting Locale")
 locale.setlocale(locale.LC_ALL, 'en_IN.UTF-8')
-# print(locale.setlocale(locale.LC_ALL, 'en_IN.ISO8859-1'))
-# locale.setlocale(locale.LC_ALL, 'en_IN.ISO8859-1')
 
 from dotenv import load_dotenv
 
