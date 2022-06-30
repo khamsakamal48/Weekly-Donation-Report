@@ -52,6 +52,7 @@ IMAP_PORT = os.getenv("IMAP_PORT")
 SMTP_URL = os.getenv("SMTP_URL")
 SMTP_PORT = os.getenv("SMTP_PORT")
 SEND_TO  = os.getenv("SEND_TO")
+CC_TO  = os.getenv("CC_TO")
 
 # Retrieve access_token from file
 print("Retrieve token from API connections")
@@ -386,6 +387,7 @@ def send_email():
     message["Subject"] = "Donation Summary"
     message["From"] = MAIL_USERN
     message["To"] = SEND_TO
+    message['Cc'] = CC_TO
 
     # Adding Reply-to header
     message.add_header('reply-to', MAIL_USERN)
@@ -522,7 +524,7 @@ div[style*="margin: 16px 0;"] { margin: 0 !important; }
     with smtplib.SMTP_SSL(SMTP_URL, SMTP_PORT, context=context) as server:
         server.login(MAIL_USERN, MAIL_PASSWORD)
         server.sendmail(
-            MAIL_USERN, SEND_TO, emailcontent
+            MAIL_USERN, SEND_TO.split(',') + CC_TO.split(','), emailcontent
         )
 
     # Save copy of the sent email to sent items folder
