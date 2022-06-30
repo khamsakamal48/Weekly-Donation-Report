@@ -65,6 +65,10 @@ python3 'Request Access Token.py'
 - Copy and paste the link in a browser to get the **TOKEN**
 - Copy the **TOKEN** in the terminal and press ENTER
 
+Run below command in Terminal
+```bash
+python3 'Refresh Access Token.py'
+```
 
 Set a CRON job to refresh token and start the program
 ```bash
