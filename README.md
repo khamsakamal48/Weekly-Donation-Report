@@ -5,6 +5,7 @@
 
 ```bash
 sudo apt install python3-pip
+sudo apt install git
 pip3 install pretty_html_table
 pip3 install pandas
 ```
@@ -51,8 +52,14 @@ ERROR_EMAILS_TO=# Email ID of user who needs to receive error emails (if any)
 ```
 
 ### Installation
+Clone the repository
+```bash
+git clone https://github.com/khamsakamal48/Weekly-Donation-Report.git
+```
+
 Run below command in Terminal
 ```bash
+cd Weekly-Donation-Report
 python3 'Request Access Token.py'
 ```
 - Copy and paste the link in a browser to get the **TOKEN**
