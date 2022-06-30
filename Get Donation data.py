@@ -630,8 +630,7 @@ def get_monthly_donation():
     
     monthly_donation_amount_list = []
     monthly_donation_month_list = []
-    donation_amount = 0
-    monthinteger = 3
+    monthinteger = 4
     
     for each_start_date in start_dates:
         start_ = datetime.strptime(each_start_date, '%m-%d-%Y')
@@ -639,10 +638,14 @@ def get_monthly_donation():
         print(start_date)
         print(date.today())
         
+        donation_amount = 0
+        
         if start_date > date.today():
             break
         else:
             for each_end_date in end_dates:
+                housekeeping()
+                
                 global url, params
                 url = "https://api.sky.blackbaud.com/gift/v1/gifts?gift_type=Donation&start_gift_date=%s&end_gift_date=%s&gift_type=MatchingGiftPayment&gift_type=PledgePayment&gift_type=RecurringGiftPayment" % (each_start_date, each_end_date)
                 print(url)
@@ -675,7 +678,7 @@ def get_monthly_donation():
         monthinteger += 1
         
         if monthinteger > 12:
-            monthinteger_new = monthinteger - 1
+            monthinteger_new = monthinteger - 12
             monthinteger = monthinteger_new
     
     print(monthly_donation_amount_list)
@@ -684,7 +687,7 @@ def get_monthly_donation():
     global re_donation
     re_donation = {
         'Month': monthly_donation_month_list,
-        'Donation Amount': monthly_donation_amount_list
+        'Amount': monthly_donation_amount_list
     }
     
     prepare_report()
