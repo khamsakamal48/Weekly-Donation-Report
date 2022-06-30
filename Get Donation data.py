@@ -283,7 +283,7 @@ def get_ytd_donation():
     ytd_donation_amount_in_inr = locale.currency(ytd_donation_amount, grouping=True)
     
     print("YTD Donation in RE: " + str(ytd_donation_amount_in_inr))
-
+    
     global re_donation
     re_donation = {
         'Financial Year': "F.Y. " + financial_year,
@@ -404,7 +404,7 @@ def send_email():
     print("Sending email...")
     
     message = MIMEMultipart()
-    message["Subject"] = "Donation Summary"
+    message["Subject"] = "Donation Summary | Raisers Edge"
     message["From"] = MAIL_USERN
     message["To"] = SEND_TO
     message['Cc'] = CC_TO
@@ -412,125 +412,207 @@ def send_email():
     # Adding Reply-to header
     message.add_header('reply-to', MAIL_USERN)
         
-    start = """<!DOCTYPE html>
-<html>
-<head>
-<title></title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<style type="text/css">
-/* CLIENT-SPECIFIC STYLES */
-body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
-img { -ms-interpolation-mode: bicubic; }
+    start = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+    /* CLIENT-SPECIFIC STYLES */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; }
 
-/* RESET STYLES */
-img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
-table { border-collapse: collapse !important; }
-body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+    /* RESET STYLES */
+    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    table { border-collapse: collapse !important; }
+    body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
 
-/* iOS BLUE LINKS */
-a[x-apple-data-detectors] {
-    color: inherit !important;
-    text-decoration: none !important;
-    font-size: inherit !important;
-    font-family: inherit !important;
-    font-weight: inherit !important;
-    line-height: inherit !important;
-}
-
-/* MEDIA QUERIES */
-@media screen and (max-width: 480px) {
-    .mobile-hide {
-        display: none !important;
+    /* iOS BLUE LINKS */
+    a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
     }
-    .mobile-center {
-        text-align: center !important;
+
+    /* MEDIA QUERIES */
+    @media screen and (max-width: 480px) {
+        .mobile-hide {
+            display: none !important;
+        }
+        .mobile-center {
+            text-align: center !important;
+        }
     }
-}
 
-/* ANDROID CENTER FIX */
-div[style*="margin: 16px 0;"] { margin: 0 !important; }
-</style>
-<body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
+    /* ANDROID CENTER FIX */
+    div[style*="margin: 16px 0;"] { margin: 0 !important; }
+    </style>
+    <body style="margin: 0 !important; padding: 0 !important; background-color: #eeeeee;" bgcolor="#eeeeee">
 
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
-    <tr>
-        <td align="center" style="background-color: #eeeeee;" bgcolor="#eeeeee">
-        <!--[if (gte mso 9)|(IE)]>
-        <table align="center" border="0" cellspacing="0" cellpadding="0" width="1200">
+    <!-- HIDDEN PREHEADER TEXT -->
+    <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Open Sans, Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
+    Dear Team,
+
+    Below are the details of the Donations as recorded in Raisers Edge.
+    </div>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
-        <td align="center" valign="top" width="1200">
-        <![endif]-->
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:1200px;">
+            <td align="center" style="background-color: #eeeeee;" bgcolor="#eeeeee">
+            <!--[if (gte mso 9)|(IE)]>
+            <table align="center" border="0" cellspacing="0" cellpadding="0" width="1200">
             <tr>
-                <td align="center" valign="center" style="font-size:0; padding: 10px;" bgcolor="#00B2EA">
-                <!--[if (gte mso 9)|(IE)]>
-                <table align="center" border="0" cellspacing="0" cellpadding="0" width="1200">
+            <td align="center" valign="top" width="1200">
+            <![endif]-->
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:1200px;">
                 <tr>
-                <td align="left" valign="top" width="300">
-                <![endif]-->
-                <!--[if (gte mso 9)|(IE)]>
-                </td>
-                <td align="right" width="300">
-                <![endif]-->
-                <div style="display:inline-block; max-width: auto; min-width: auto; vertical-align:top; width:auto;">
-                    <table align="center" border="0" cellpadding="10" cellspacing="0" width="100%" style="max-width:300px;">
+                    <td align="center" valign="center" style="font-size:0; padding: 10px;" bgcolor="#305496">
+                    <!--[if (gte mso 9)|(IE)]>
+                    <table align="center" border="0" cellspacing="0" cellpadding="0" width="1200">
+                    <tr>
+                    <td align="left" valign="top" width="300">
+                    <![endif]-->
+                    <!--[if (gte mso 9)|(IE)]>
+                    </td>
+                    <td align="right" width="300">
+                    <![endif]-->
+                    <div style="display:inline-block; max-width: auto; min-width: auto; vertical-align:top; width:auto;">
+                        <table align="center" border="0" cellpadding="10" cellspacing="0" width="100%" style="max-width:300px;">
+                            <tr>
+                                <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 24px;">
+                                    <a href="http://www.iitb.ac.in" target="_blank" style="color: #ffffff; text-decoration: none;"><img src="https://i.ibb.co/fk6J37P/iitblogowhite.png" width="85" height="85" style="display: block; border: 0px;"/></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--[if (gte mso 9)|(IE)]>
+                    </td>
+                    </tr>
+                    </table>
+                    <![endif]-->
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" style="padding: 35px; background-color: #ffffff;" bgcolor="#ffffff">
+                    <!--[if (gte mso 9)|(IE)]>
+                    <table align="center" border="0" cellspacing="0" cellpadding="0" width="1200">
+                    <tr>
+                    <td align="center" valign="top" width="1200">
+                    <![endif]-->
+                    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:1200px;">
                         <tr>
-                            <td style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 24px;">
-                                <a href="http://www.iitb.ac.in" target="_blank" style="color: #ffffff; text-decoration: none;"><img src="https://i.ibb.co/fk6J37P/iitblogowhite.png" width="85" height="85" style="display: block; border: 0px;"/></a>
+                            <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 0px; padding-bottom: 10px; solid #eeeeee; ">
+                                <p align="justify" style="font-size: 16px; font-weight: 400; line-height: 24px; color: #333333;">
+                                    Dear Team,<br><br>
+                                    Below are the details of the Donations as recorded in Raisers Edge.<br>
+                                </p>
+                                <p align="center" style="font-size: 32px; font-weight: 800; line-height: 24px; color: #333333; padding-top: 10px;">
+                                    <br>
+                                    YTD Summary
+                                </p>
+                            """
+    
+    month = """
+    <p align="center" style="font-size: 32px; font-weight: 800; line-height: 24px; color: #333333; padding-top: 10px;">
+                                <br>
+                                Monthwise Summary
+                            </p> 
+    """
+    
+    weekly = """
+    <p align="center" style="font-size: 32px; font-weight: 800; line-height: 24px; color: #333333; padding-top: 10px;">
+                                <br>
+                                Weekly Summary
+                            </p>
+    """
+    
+    end = """
+            <p align="left" style="font-size: 16px; font-weight: 200; line-height: 24px; color: #333333;">
+                                    <br>
+                                    The weekly summary is for a period of <b>start_date</b> to <b>end_date</b>.<br><br>
+                                </p>
+
                             </td>
                         </tr>
+                        </tr>
                     </table>
-                </div>
-                <!--[if (gte mso 9)|(IE)]>
-                </td>
+                    <!--[if (gte mso 9)|(IE)]>
+                    </td>
+                    </tr>
+                    </table>
+                    <![endif]-->
+                    </td>
                 </tr>
-                </table>
-                <![endif]-->
-                </td>
-            </tr>"""
-    end = """<tr>
-                <td align="center" style="padding: 5px; background-color: #ffffff;" bgcolor="#ffffff">
-                <!--[if (gte mso 9)|(IE)]>
-                <table align="center" border="0" cellspacing="0" cellpadding="0" width="1200">
+
                 <tr>
-                <td align="center" valign="top" width="600">
-                <![endif]-->
-                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:1200px;">
+                    <td align="center" style=" padding: 10px; background-color: #305496;" bgcolor="#305496">
+                    <!--[if (gte mso 9)|(IE)]>
+                    <table align="center" border="0" cellspacing="0" cellpadding="0" width="1200">
                     <tr>
-                        <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 24px; padding: 5px 0 10px 0;">
-                            <p style="font-size: 14px; font-weight: 800; line-height: 18px; color: #333333;">
-                                Indian Institute of Technology Bombay<br>
-                                Powai, Mumbai 400 076, Maharashtra, India
-                            </p>
-                        </td>
+                    <td align="center" valign="top" width="1200">
+                    <![endif]-->
+                    <table align="center" border="0" cellpadding="10" cellspacing="10" width="100%" style="max-width:1200px; padding-top: 10px;">
+                    <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 24px; padding: 0px 0px 0px 0px;">
+                        <p style="font-size: 32px; font-weight: 600; line-height: 24px; color: #ffffff;">
+                        ज्ञानम् परमम् ध्येयम्
+                        </p>
+                    </td>
+                    </table>
+                    <!--[if (gte mso 9)|(IE)]>
+                    </td>
                     </tr>
-                    <tr>
-                    </tr>
-                </table>
-                <!--[if (gte mso 9)|(IE)]>
-                </td>
+                    </table>
+                    <![endif]-->
+                    </td>
                 </tr>
-                </table>
-                <![endif]-->
-                </td>
+                <tr>
+                    <td align="center" style="padding: 5px; background-color: #ffffff;" bgcolor="#ffffff">
+                    <!--[if (gte mso 9)|(IE)]>
+                    <table align="center" border="0" cellspacing="0" cellpadding="0" width="1200">
+                    <tr>
+                    <td align="center" valign="top" width="1200">
+                    <![endif]-->
+                    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:1200px;">
+                        <tr>
+                            <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 24px; padding: 5px 0 10px 0;">
+                                <p style="font-size: 14px; font-weight: 400; line-height: 18px; color: #808080;">
+                                    This is a system generated email
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                        </tr>
+                    </table>
+                    <!--[if (gte mso 9)|(IE)]>
+                    </td>
+                    </tr>
+                    </table>
+                    <![endif]-->
+                    </td>
+                </tr>
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
             </tr>
-        </table>
-        <!--[if (gte mso 9)|(IE)]>
-        </td>
+            </table>
+            <![endif]-->
+            </td>
         </tr>
-        </table>
-        <![endif]-->
-        </td>
-    </tr>
-</table>
-</body>
-</html>"""
-            
-    emailbody = start + monthly_report_output + weekly_report_output + end
+    </table>
+    </body>
+    </html>
+    """
+           
+    emailbody = start + ytd_report_output + month + monthly_report_output + weekly + weekly_report_output + end.replace("start_date", start_gift_date).replace("end_date", end_gift_date)
     
+    print(ytd_report_output)
     print(monthly_report_output)
     print(weekly_report_output)
     
