@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import requests, os, json, glob, csv, sys, smtplib, ssl, imaplib, time, email, re, fuzzywuzzy, itertools, datetime, logging, locale, pretty_html_table, calendar
+import requests, os, json, glob, sys, smtplib, ssl, imaplib, time, email, datetime, logging, locale, pretty_html_table, calendar
 import pandas as pd
 from smtplib import SMTP
 from datetime import datetime
