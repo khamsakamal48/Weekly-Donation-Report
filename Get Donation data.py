@@ -561,7 +561,7 @@ def prepare_report():
     data = pd.DataFrame(re_donation)
     
     global report_output
-    report_output = (build_table(data, 'blue_dark', font_family='Open Sans, Helvetica, Arial, sans-serif', even_color='black', padding='10px', width='1200px')).replace("background-color: #D9E1F2;font-family: Open Sans", "background-color: #D9E1F2; color: black;font-family: Open Sans")
+    report_output = (build_table(data, 'blue_dark', font_family='Open Sans, Helvetica, Arial, sans-serif', even_color='black', padding='10px', width='1200px', font_size='16px')).replace("background-color: #D9E1F2;font-family: Open Sans", "background-color: #D9E1F2; color: black;font-family: Open Sans")
 
 def get_monthly_donation():
     print("Getting Monthly Gift list from Raisers Edge")
