@@ -53,6 +53,7 @@ SMTP_URL = os.getenv("SMTP_URL")
 SMTP_PORT = os.getenv("SMTP_PORT")
 SEND_TO  = os.getenv("SEND_TO")
 CC_TO  = os.getenv("CC_TO")
+ERROR_EMAILS_TO  = os.getenv("ERROR_EMAILS_TO")
 
 # Retrieve access_token from file
 print("Retrieve token from API connections")
@@ -176,7 +177,7 @@ def send_error_emails():
     # Create a text/html message from a rendered template
     emailbody = MIMEText(
         Environment().from_string(TEMPLATE).render(
-            job_name = "Syncing Raisers Edge and AlmaBase",
+            job_name = "Getting Donation Summary from Raisers Edge",
             current_time=datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
             error_log_message = Argument
         ), "html"
@@ -193,7 +194,7 @@ def send_error_emails():
     with smtplib.SMTP_SSL(SMTP_URL, SMTP_PORT, context=context) as server:
         server.login(MAIL_USERN, MAIL_PASSWORD)
         server.sendmail(
-            MAIL_USERN, SEND_TO, emailcontent
+            MAIL_USERN, ERROR_EMAILS_TO, emailcontent
         )
 
     # Save copy of the sent email to sent items folder
