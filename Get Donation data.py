@@ -118,7 +118,7 @@ def send_error_emails():
     message = MIMEMultipart()
     message["Subject"] = subject
     message["From"] = MAIL_USERN
-    message["To"] = SEND_TO
+    message["To"] = ERROR_EMAILS_TO
 
     # Adding Reply-to header
     message.add_header('reply-to', MAIL_USERN)
