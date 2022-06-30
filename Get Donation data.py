@@ -328,7 +328,8 @@ def get_weekly_donation():
             for each_value in data['value']:
                 
                 amount = each_value['amount']['value']
-                weekly_donation_amount_list.append(int(amount))
+                amount_in_inr = locale.currency(amount, grouping=True)
+                weekly_donation_amount_list.append(amount_in_inr)
                 
                 constituent_id = each_value['constituent_id']
                 weekly_donation_donor_list.append(int(constituent_id))
@@ -655,8 +656,10 @@ def get_monthly_donation():
                 break
             
             donation_amount = sum(donation)
+            donation_amount_in_inr = locale.currency(donation_amount, grouping=True)
+            
         
-        monthly_donation_amount_list.append(donation_amount)
+        monthly_donation_amount_list.append(donation_amount_in_inr)
         
         # Get month name
         print("Getting month name")
