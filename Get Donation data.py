@@ -284,6 +284,19 @@ def get_ytd_donation():
     
     print("YTD Donation in RE: " + str(ytd_donation_amount_in_inr))
 
+    global re_donation
+    re_donation = {
+        'Financial Year': "F.Y. " + financial_year,
+        'Amount': [ytd_donation_amount_in_inr]
+    }
+    
+    print_json(re_donation)
+    
+    prepare_report()
+    
+    global ytd_report_output
+    ytd_report_output = report_output
+
 def get_weekly_donation():
     print("Getting Weekly Gift list from Raisers Edge")
     
