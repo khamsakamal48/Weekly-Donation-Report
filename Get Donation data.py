@@ -500,15 +500,15 @@ def send_email():
                     </td>
                 </tr>
                 <tr>
-                    <td align="center" style="padding: 35px; background-color: #ffffff;" bgcolor="#ffffff">
+                    <td align="justify" style="padding: 35px; background-color: #ffffff;" bgcolor="#ffffff">
                     <!--[if (gte mso 9)|(IE)]>
-                    <table align="center" border="0" cellspacing="0" cellpadding="0" width="1200">
+                    <table align="justify" border="0" cellspacing="0" cellpadding="0" width="1200">
                     <tr>
-                    <td align="center" valign="top" width="1200">
+                    <td align="justify" valign="top" width="1200">
                     <![endif]-->
-                    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:1200px;">
+                    <table align="justify" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:1200px;">
                         <tr>
-                            <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 0px; padding-bottom: 10px; solid #eeeeee; ">
+                            <td align="justify" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 0px; padding-bottom: 10px; solid #eeeeee; ">
                                 <p align="justify" style="font-size: 16px; font-weight: 400; line-height: 24px; color: #333333;">
                                     Dear Team,<br><br>
                                     Below are the details of the Donations as recorded in Raisers Edge.<br>
