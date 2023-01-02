@@ -286,7 +286,7 @@ def get_ytd_donation():
     
     global re_donation
     re_donation = {
-        'Financial Year': "F.Y. " + financial_year,
+        'Financial Year': "F.Y. " + str(financial_year),
         'Amount': [ytd_donation_amount_in_inr]
     }
     
