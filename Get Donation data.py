@@ -474,7 +474,7 @@ def send_email():
             <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:1200px;">
                 <tr> 
                     <td align="center" style="padding:0;Margin:0"> 
-                    <table class="es-header-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px"> 
+                    <table class="es-header-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:1200px"> 
                     <tr> 
                         <td align="left" bgcolor="#305496" style="padding:0;Margin:0;padding-top:20px;padding-left:20px;padding-right:20px;background-color:#305496"> 
                         <table cellpadding="0" cellspacing="0" width="100%" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
