@@ -243,7 +243,7 @@ def get_ytd_donation():
     current_year = datetime.now().strftime("%Y")
     print("Current year: " + str(current_year))
 
-    current_date = int(datetime.now().strftime("%d"))
+    current_date = datetime.now().strftime("%d")
 
     # Determining the current Financial Year to determine Start date
     print("Determining the current Financial Year to determine Start date")
@@ -251,7 +251,7 @@ def get_ytd_donation():
     global financial_year
     if int(current_month) <= 4:
 
-        if current_month == 4 and current_date > 7:
+        if int(current_month) == 4 and int(current_date) > 7:
             financial_year = current_year
 
         else:
