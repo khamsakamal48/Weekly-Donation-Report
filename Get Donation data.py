@@ -14,6 +14,7 @@ from email.mime.base import MIMEBase
 from email.mime.application import MIMEApplication
 from jinja2 import Environment
 from pretty_html_table import build_table
+import html
 
 # Printing the output to file for debugging
 sys.stdout = open('Process.log', 'w')
@@ -613,6 +614,9 @@ def send_email():
     print(ytd_report_output)
     print(monthly_report_output)
     print(weekly_report_output)
+
+    with open('Email.html', "w") as f:
+        f.write(html.escape(str(emailbody)))
     
     # Add HTML parts to MIMEMultipart message
     # The email client will try to render the last part first
