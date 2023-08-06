@@ -6,8 +6,15 @@
 ```bash
 sudo apt install python3-pip
 sudo apt install git
-pip3 install pretty_html_table
-pip3 install pandas
+pip install pretty_html_table
+pip install pandas
+pip install requests
+pip install python-dotenv
+pip install jinja2
+pip install msal
+pip install pyarrow
+pip install fastparquet
+pip install chardet
 ```
 
 - Set up locale for Indian Currency
@@ -40,12 +47,10 @@ AUTH_CODE= # Raiser's Edge NXT Auth Code (encode Client
 REDIRECT_URL=# Redirect URL of application in Raiser's Edge NXT
 CLIENT_ID=# Client ID of application in Raiser's Edge NXT
 RE_API_KEY=# Raiser's Edge NXT Developer API Key
-MAIL_USERN= # Email Username
-MAIL_PASSWORD= # Email password
-IMAP_URL=# IMAP web address
-IMAP_PORT=# IMAP Port
-SMTP_URL=# SMTP web address
-SMTP_PORT=# SMTP Port
+O_CLIENT_ID= # Client ID of the Application in O365 to send emails
+CLIENT_SECRET= # Application Secret in O365
+TENANT_ID=# Tenant ID of O365 Group
+FROM=# From Email Address
 SEND_TO='email_1, email_2' # Email ID of users who needs to receive the report
 CC_TO='email_3, email_4' # Email ID of users who will be CC'd for the report
 ERROR_EMAILS_TO=# Email ID of user who needs to receive error emails (if any)
