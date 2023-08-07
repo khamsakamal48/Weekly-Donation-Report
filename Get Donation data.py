@@ -550,7 +550,7 @@ def get_weekly_donation():
         'date', 'amount.value', 'constituent_id', 'campaign_id'
     ]].reset_index(drop=True).copy()
 
-    data = data.sort_values(['date']).copy()
+    data = data.sort_values(['date'], ascending=False).copy()
     data['date'] = data['date'].dt.strftime('%d-%b-%Y')
 
     data['Name of Donor'] = data['constituent_id'].apply(lambda x: get_donor_name(x))
