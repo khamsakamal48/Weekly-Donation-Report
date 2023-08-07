@@ -458,7 +458,11 @@ def get_ytd_donation():
         (re_donation['receipt_date'] >= start_gift_date)
     ]['amount.value'].sum()
 
-    amount = locale.currency(amount, grouping=True)
+    if len(str(round(amount))) >= 10:
+        amount = locale.currency(round(amount), grouping=True)[:-3]
+        amount = amount.replace(',', '', 1)
+    else:
+        amount = locale.currency(round(amount), grouping=True)[:-3]
 
     amount = {
         'Financial Year': "F.Y. " + str(financial_year) + ' - ' + str(int(str(financial_year)[-2:]) + 1),
@@ -477,7 +481,11 @@ def get_previous_year_donations():
         (re_donation['date'] < start_gift_date)
     ]['amount.value'].sum()
 
-    amount = locale.currency(amount, grouping=True)
+    if len(str(round(amount))) >= 10:
+        amount = locale.currency(round(amount), grouping=True)[:-3]
+        amount = amount.replace(',', '', 1)
+    else:
+        amount = locale.currency(round(amount), grouping=True)[:-3]
 
     amount = {
         'Financial Year': 'Previous Financial Years',
@@ -525,7 +533,7 @@ def get_monthly_donation():
 
     data = data[data['Amount'] > 0].reset_index(drop=True).copy()
 
-    data['Amount'] = data['Amount'].apply(lambda x: locale.currency(x, grouping=True))
+    data['Amount'] = data['Amount'].apply(lambda x: locale.currency(round(x), grouping=True)[:-3])
 
     data = prepare_report(data)
 
@@ -555,7 +563,7 @@ def get_weekly_donation():
 
     data = data.drop(columns=['constituent_id', 'campaign_id']).copy()
 
-    data['Amount'] = data['Amount'].apply(lambda x: locale.currency(x, grouping=True))
+    data['Amount'] = data['Amount'].apply(lambda x: locale.currency(round(x), grouping=True)[:-3])
 
     data = prepare_report(data)
 
@@ -699,6 +707,10 @@ def send_email():
                                     Dear Team,<br><br>
                                     Below are the details of the Donations as recorded in Raisers Edge.
                                 </p>
+                                <p align="left" style="font-size: 14px; font-weight: 100; line-height: 24px; color: #808080;">
+                                    <sup>1</sup>Gifts donated in the current FY & received in IITB accounts in the current FY.<br>
+                                    <sup>2</sup>Gifts donated in previous FY but received in IITB accounts in current FY.
+                                </p>
                                 <p align="center" style="font-size: 32px; font-weight: 800; line-height: 24px; color: #333333; padding-top: 10px;">
                                     YTD Summary
                                 </p>
@@ -711,7 +723,7 @@ def send_email():
     tr_date = '''
     <p align="center" style="font-size: 16px; font-weight: 400; line-height: 24px; color: #333333;">
         <br>
-        <b>As per transaction date</b><sup>2</sup>
+        <b>Donations received with gift date in previous financial years</b><sup>2</sup>
         <br>
     </p>
     '''
@@ -734,10 +746,6 @@ def send_email():
     <p align="left" style="font-size: 16px; font-weight: 200; line-height: 24px; color: #333333;">
                                 <br>
                                 The weekly summary is for a period of <b>start_date</b> to <b>end_date</b>.<br><br>
-                            </p>
-                            <p align="left" style="font-size: 16px; font-weight: 100; line-height: 24px; color: #808080;">
-                                <sup>1</sup>Donations done in the current FY & received in IITB accounts in the current FY.<br>
-                                <sup>2</sup>Donations done in previous FY but received in IITB accounts in current FY.
                             </p>
                         </td>
                     </tr>
