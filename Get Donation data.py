@@ -453,10 +453,14 @@ def get_dates(value):
 def get_ytd_donation():
     logging.info('Getting YTD Gifts from Raisers Edge')
 
+    # amount = re_donation[
+    #     (re_donation['date'] >= start_gift_date) &
+    #     (re_donation['receipt_date'] >= start_gift_date)
+    # ]['amount.value'].sum()
+
     amount = re_donation[
-        (re_donation['date'] >= start_gift_date) &
         (re_donation['receipt_date'] >= start_gift_date)
-    ]['amount.value'].sum()
+        ]['amount.value'].sum()
 
     if len(str(round(amount))) >= 10:
         amount = locale.currency(round(amount), grouping=True)[:-3]
@@ -499,16 +503,20 @@ def get_previous_year_donations():
 def get_monthly_donation():
     logging.info('Getting Monthly Gifts from Raisers Edge')
 
-    data = re_donation[
-        (re_donation['receipt_date'] >= start_gift_date) &
-        (re_donation['date'] >= start_gift_date)
-        ][['date', 'amount.value']].reset_index(drop=True).copy()
+    # data = re_donation[
+    #     (re_donation['receipt_date'] >= start_gift_date) &
+    #     (re_donation['date'] >= start_gift_date)
+    #     ][['date', 'amount.value']].reset_index(drop=True).copy()
 
-    data['date'] = pd.to_datetime(data['date'], format='%d-%b-%Y')
-    data['date'] = data['date'].dt.strftime('%B')
+    data = re_donation[
+        (re_donation['receipt_date'] >= start_gift_date)
+        ][['receipt_date', 'amount.value']].reset_index(drop=True).copy()
+
+    data['receipt_date'] = pd.to_datetime(data['receipt_date'], format='%d-%b-%Y')
+    data['receipt_date'] = data['receipt_date'].dt.strftime('%B')
 
     data = data.rename(columns={
-        'date': 'Month',
+        'receipt_date': 'Month',
         'amount.value': 'Amount'
     }).copy()
 
@@ -542,22 +550,29 @@ def get_monthly_donation():
 def get_weekly_donation():
     logging.info('Getting Weekly Gift list from Raisers Edge')
 
+    # data = re_donation[
+    #     (re_donation['receipt_date'] >= (pd.to_datetime('today') - timedelta(days=7)).strftime('%d-%b-%Y')) &
+    #     (re_donation['receipt_date'] >= start_gift_date) &
+    #     (re_donation['date'] >= start_gift_date)
+    # ][[
+    #     'date', 'amount.value', 'constituent_id', 'campaign_id'
+    # ]].reset_index(drop=True).copy()
+
     data = re_donation[
         (re_donation['receipt_date'] >= (pd.to_datetime('today') - timedelta(days=7)).strftime('%d-%b-%Y')) &
-        (re_donation['receipt_date'] >= start_gift_date) &
-        (re_donation['date'] >= start_gift_date)
-    ][[
-        'date', 'amount.value', 'constituent_id', 'campaign_id'
+        (re_donation['receipt_date'] >= start_gift_date)
+        ][[
+        'receipt_date', 'amount.value', 'constituent_id', 'campaign_id'
     ]].reset_index(drop=True).copy()
 
-    data = data.sort_values(['date'], ascending=False).copy()
-    data['date'] = data['date'].dt.strftime('%d-%b-%Y')
+    data = data.sort_values(['receipt_date'], ascending=False).copy()
+    data['receipt_date'] = data['receipt_date'].dt.strftime('%d-%b-%Y')
 
     data['Name of Donor'] = data['constituent_id'].apply(lambda x: get_donor_name(x))
     data['Purpose/ Project Description'] = data['campaign_id'].apply(lambda x: get_project(x))
 
     data = data.rename(columns={
-        'date': 'Date of Credit',
+        'receipt_date': 'Date of Credit',
         'amount.value': 'Amount'
     }).copy()
 
@@ -707,15 +722,11 @@ def send_email():
                                     Dear Team,<br><br>
                                     Below are the details of the Donations as recorded in Raisers Edge.
                                 </p>
-                                <p align="left" style="font-size: 14px; font-weight: 100; line-height: 24px; color: #808080;">
-                                    <sup>1</sup>Gifts donated in the current FY & received in IITB accounts in the current FY.<br>
-                                    <sup>2</sup>Gifts donated in previous FY but received in IITB accounts in current FY.
-                                </p>
                                 <p align="center" style="font-size: 32px; font-weight: 800; line-height: 24px; color: #333333; padding-top: 10px;">
                                     YTD Summary
                                 </p>
                                 <p align="center" style="font-size: 16px; font-weight: 400; line-height: 24px; color: #333333;">
-                                    <b>As per receipt date</b><sup>1</sup>
+                                    <b>Gifts received in current financial year</b>
                                     <br>
                                 </p>
     '''
@@ -723,7 +734,7 @@ def send_email():
     tr_date = '''
     <p align="center" style="font-size: 16px; font-weight: 400; line-height: 24px; color: #333333;">
         <br>
-        <b>Donations received with gift date in previous financial years</b><sup>2</sup>
+        <b>Gifts received in current financial year with gift date in previous financial years</b>
         <br>
     </p>
     '''
