@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import json, requests, os, shutil
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
@@ -17,7 +15,6 @@ http.mount("https://", adapter)
 http.mount("http://", adapter)
 
 # Set current directory
-#os.chdir(os.path.dirname(sys.argv[0]))
 os.chdir(os.getcwd())
 
 from dotenv import load_dotenv
