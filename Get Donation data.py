@@ -453,11 +453,6 @@ def get_dates(value):
 def get_ytd_donation():
     logging.info('Getting YTD Gifts from Raisers Edge')
 
-    # amount = re_donation[
-    #     (re_donation['date'] >= start_gift_date) &
-    #     (re_donation['receipt_date'] >= start_gift_date)
-    # ]['amount.value'].sum()
-
     amount = re_donation[
         (re_donation['receipt_date'] >= start_gift_date)
         ]['amount.value'].sum()
@@ -503,11 +498,6 @@ def get_previous_year_donations():
 def get_monthly_donation():
     logging.info('Getting Monthly Gifts from Raisers Edge')
 
-    # data = re_donation[
-    #     (re_donation['receipt_date'] >= start_gift_date) &
-    #     (re_donation['date'] >= start_gift_date)
-    #     ][['date', 'amount.value']].reset_index(drop=True).copy()
-
     data = re_donation[
         (re_donation['receipt_date'] >= start_gift_date)
         ][['receipt_date', 'amount.value']].reset_index(drop=True).copy()
@@ -549,14 +539,6 @@ def get_monthly_donation():
 
 def get_weekly_donation():
     logging.info('Getting Weekly Gift list from Raisers Edge')
-
-    # data = re_donation[
-    #     (re_donation['receipt_date'] >= (pd.to_datetime('today') - timedelta(days=7)).strftime('%d-%b-%Y')) &
-    #     (re_donation['receipt_date'] >= start_gift_date) &
-    #     (re_donation['date'] >= start_gift_date)
-    # ][[
-    #     'date', 'amount.value', 'constituent_id', 'campaign_id'
-    # ]].reset_index(drop=True).copy()
 
     data = re_donation[
         (re_donation['receipt_date'] >= (pd.to_datetime('today') - timedelta(days=7)).strftime('%d-%b-%Y')) &
